@@ -3,7 +3,9 @@ namespace BookShop.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
+    using BookShop.Common;
     using BookShop.Data.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
@@ -13,9 +15,6 @@ namespace BookShop.Data.Models
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Roles = new HashSet<IdentityUserRole<string>>();
-            this.Claims = new HashSet<IdentityUserClaim<string>>();
-            this.Logins = new HashSet<IdentityUserLogin<string>>();
         }
 
         // Audit info
@@ -28,10 +27,26 @@ namespace BookShop.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
-        public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
+        [Required]
+        [MaxLength(GlobalConstants.NameMaxLength)]
+        public string FirstName { get; set; }
 
-        public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+        [Required]
+        [MaxLength(GlobalConstants.NameMaxLength)]
+        public string LastName { get; set; }
 
-        public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+        [Required]
+        [MaxLength(GlobalConstants.AddressMaxLength)]
+        public string Address { get; set; }
+
+        public virtual ICollection<Cart> Cart { get; set; } = new HashSet<Cart>();
+
+        public virtual ICollection<Purchase> Purchases { get; set; } = new HashSet<Purchase>();
+
+        public virtual ICollection<IdentityUserRole<string>> Roles { get; set; } = new HashSet<IdentityUserRole<string>>();
+
+        public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; } = new HashSet<IdentityUserClaim<string>>();
+
+        public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; } = new HashSet<IdentityUserLogin<string>>();
     }
 }
