@@ -6,17 +6,37 @@
 
         public const string AdministratorRoleName = "Administrator";
 
-        public const int NameMaxLength = 30;
+        public const int NameMinLength = 3;
+
+        public const int NameMaxLength = 100;
 
         public const int AddressMaxLength = 1000;
 
-        public const int BookNameMaxLength = 100;
+        public const string MinPrice = "0.01";
+
+        public const string MaxPrice = "79228162514264337593543950335";
+
+        public const int MinQuantity = 1;
+
+        public const int MaxQuantity = int.MaxValue;
+
+        public const int MinPages = 1;
+
+        public const int MaxPages = int.MaxValue;
+
+        public const int MinYearOfIssue = 1900;
+
+        public const int MaxYearOfIssue = 2100;
+
+        public const int AnnotationMinLength = 20;
 
         public const int AnnotationMaxLength = 1000;
 
-        public const int IsbnMaxLength = 13;
+        public const int MinAuthors = 1;
 
-        public const int CategoryNameMaxLength = 100;
+        public const int MinCategories = 1;
+
+        public const int IsbnMaxLength = 13;
 
         public const int DescriptionMaxLength = 300;
 

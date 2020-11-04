@@ -29,11 +29,7 @@ namespace BookShop.Data.Models
 
         [Required]
         [MaxLength(GlobalConstants.NameMaxLength)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [MaxLength(GlobalConstants.NameMaxLength)]
-        public string LastName { get; set; }
+        public string FullName { get; set; }
 
         [Required]
         [MaxLength(GlobalConstants.AddressMaxLength)]

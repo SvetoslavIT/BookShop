@@ -1,9 +1,8 @@
 ﻿namespace BookShop.Web.ViewModels.Settings
 {
+    using AutoMapper;
     using BookShop.Data.Models;
     using BookShop.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

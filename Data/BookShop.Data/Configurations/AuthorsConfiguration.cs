@@ -9,8 +9,7 @@
     {
         public void Configure(EntityTypeBuilder<Author> author)
         {
-            author.Property(x => x.FirstName).IsUnicode();
-            author.Property(x => x.LastName).IsUnicode();
+            author.Property(x => x.FullName).IsUnicode();
         }
     }
 }

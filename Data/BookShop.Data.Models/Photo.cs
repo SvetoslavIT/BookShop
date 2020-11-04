@@ -15,6 +15,9 @@
         [MaxLength(GlobalConstants.UrlMaxLength)]
         public string Url { get; set; }
 
+        [Required]
+        public string PublicId { get; set; }
+
         public int BookId { get; set; }
 
         public virtual Book Book { get; set; }

@@ -1,0 +1,65 @@
+﻿@using BookShop.Data.Models;
+@model BookShop.Web.ViewModels.Books.AddBookViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+<form asp-action="Create" method="post">
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Quantity"></label>
+        <input asp-for="Quantity" class="form-control" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Language"></label>
+        <select asp-for="Language" asp-items="Html.GetEnumSelectList<BookLanguage>()"></select>
+        <span asp-validation-for="Language" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Isbn"></label>
+        <input asp-for="Isbn" class="form-control" />
+        <span asp-validation-for="Isbn" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="YearOfIssue"></label>
+        <input asp-for="YearOfIssue" class="form-control" />
+        <span asp-validation-for="YearOfIssue" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Annotation"></label>
+        <input asp-for="Annotation" class="form-control" />
+        <span asp-validation-for="Annotation" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Publisher"></label>
+        <input asp-for="Publisher" class="form-control" />
+        <span asp-validation-for="Publisher" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Photos"></label>
+        <input asp-for="Photos" />
+        <span asp-validation-for="Photos" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Authors"></label>
+        <input asp-for="Authors" class="form-control" />
+        <span asp-validation-for="Authors" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Categories"></label>
+        <input asp-for="Categories" class="form-control" placeholder="format: example" />
+        <span asp-validation-for="Categories" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-primary" />
+</form>

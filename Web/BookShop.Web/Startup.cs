@@ -12,7 +12,7 @@
     using BookShop.Services.Mapping;
     using BookShop.Services.Messaging;
     using BookShop.Web.ViewModels;
-
+    using CloudinaryDotNet;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -21,6 +21,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Services;
 
     public class Startup
     {
@@ -54,7 +55,15 @@
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
+            var cloudName = this.configuration["Cloudinary:Name"];
+            var apiKey = this.configuration["Cloudinary:Key"];
+            var apiSecret = this.configuration["Cloudinary:Secret"];
+
+            var account = new Account(cloudName, apiKey, apiSecret);
+            var cloudinary = new Cloudinary(account);
+
             services.AddSingleton(this.configuration);
+            services.AddSingleton(cloudinary);
 
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
@@ -64,6 +73,8 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
+            services.AddTransient<IBookService, BookService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

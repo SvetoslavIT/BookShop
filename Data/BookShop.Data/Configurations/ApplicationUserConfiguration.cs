@@ -9,9 +9,7 @@
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> appUser)
         {
-            appUser.Property(x => x.FirstName).IsUnicode();
-
-            appUser.Property(x => x.LastName).IsUnicode();
+            appUser.Property(x => x.FullName).IsUnicode();
 
             appUser.Property(x => x.Address).IsUnicode();
 

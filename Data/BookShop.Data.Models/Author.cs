@@ -10,11 +10,7 @@
     {
         [Required]
         [MaxLength(GlobalConstants.NameMaxLength)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [MaxLength(GlobalConstants.NameMaxLength)]
-        public string LastName { get; set; }
+        public string FullName { get; set; }
 
         public virtual ICollection<AuthorBook> AuthorBooks { get; set; } = new HashSet<AuthorBook>();
     }

@@ -21,7 +21,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\BookShop.Data.Common\BookShop.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\BookShop.Data.Models\BookShop.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\BookShop.Web.ViewModels\BookShop.Web.ViewModels.csproj" />
     <ProjectReference Include="..\BookShop.Services.Mapping\BookShop.Services.Mapping.csproj" />
+    <ProjectReference Include="..\BookShop.Services\BookShop.Services.csproj" />
   </ItemGroup>
 
 </Project>

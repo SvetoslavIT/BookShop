@@ -9,7 +9,7 @@
     public class Book : BaseDeletableModel<int>
     {
         [Required]
-        [MaxLength(GlobalConstants.BookNameMaxLength)]
+        [MaxLength(GlobalConstants.NameMaxLength)]
         public string Name { get; set; }
 
         public decimal Price { get; set; }
@@ -29,7 +29,7 @@
         public int YearOfIssue { get; set; }
 
         [Required]
-        [MaxLength(GlobalConstants.AddressMaxLength)]
+        [MaxLength(GlobalConstants.AnnotationMaxLength)]
         public string Annotation { get; set; }
 
         public int PublisherId { get; set; }
