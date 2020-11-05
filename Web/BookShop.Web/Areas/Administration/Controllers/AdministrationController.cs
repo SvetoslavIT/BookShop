@@ -1,6 +1,6 @@
 ﻿namespace BookShop.Web.Areas.Administration.Controllers
 {
-    using BookShop.Common;
+    using Common;
     using BookShop.Web.Controllers;
 
     using Microsoft.AspNetCore.Authorization;

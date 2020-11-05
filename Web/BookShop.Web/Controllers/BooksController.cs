@@ -1,7 +1,7 @@
 ﻿namespace BookShop.Web.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
     using ViewModels.Books;
+    using Microsoft.AspNetCore.Mvc;
 
     public class BooksController : BaseController
     {

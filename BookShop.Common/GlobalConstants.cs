@@ -10,6 +10,8 @@
 
         public const int NameMaxLength = 100;
 
+        public const int AddressMinLength = 3;
+
         public const int AddressMaxLength = 1000;
 
         public const string MinPrice = "0.01";

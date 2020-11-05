@@ -4,9 +4,9 @@
     using System.Threading.Tasks;
 
     using BookShop.Data.Common.Repositories;
-    using BookShop.Data.Models;
+    using Data.Models;
     using BookShop.Services.Data;
-    using BookShop.Web.ViewModels.Settings;
+    using ViewModels.Settings;
 
     using Microsoft.AspNetCore.Mvc;
 

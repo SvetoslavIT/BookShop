@@ -29,5 +29,17 @@
         public const string InvalidCategoryName = "Името на всички категории трябва да бъде между 3 и 100 символа!";
 
         public const string InvalidPhoto = "Всички файлове трябва да съдат снимки!";
+
+        public const string InvalidUserFullName = "Цялото име трябва да е между 3 и 100 символа!";
+
+        public const string InvalidAddress = "Адресът трябва да е между 3 и 100 символа!";
+
+        public const string InvalidLogin = "Няма потребител с тази парола!";
+
+        public const string InvalidPassword = "Паролата трябва да бъде между 6 и 100 символа!";
+
+        public const string InvalidConfirmPassword = "Паролите не съвпадат!";
+
+        public const string InvalidEmail = "Невалиден Е-майл!";
     }
 }

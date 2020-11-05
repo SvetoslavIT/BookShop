@@ -2,16 +2,17 @@
 {
     using System.Reflection;
 
-    using BookShop.Data;
+    using Data;
     using BookShop.Data.Common;
     using BookShop.Data.Common.Repositories;
-    using BookShop.Data.Models;
-    using BookShop.Data.Repositories;
-    using BookShop.Data.Seeding;
+    using Data.Models;
+    using Data.Repositories;
+    using Data.Seeding;
+    using Services;
     using BookShop.Services.Data;
-    using BookShop.Services.Mapping;
-    using BookShop.Services.Messaging;
-    using BookShop.Web.ViewModels;
+    using Services.Mapping;
+    using Services.Messaging;
+    using ViewModels;
     using CloudinaryDotNet;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -21,7 +22,6 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using Services;
 
     public class Startup
     {
@@ -54,6 +54,7 @@
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
+
 
             var cloudName = this.configuration["Cloudinary:Name"];
             var apiKey = this.configuration["Cloudinary:Key"];
