@@ -12,7 +12,7 @@
         {
             var photos = (IEnumerable<IFormFile>)value;
 
-            var validExtensions = new[] { ".jpe", ".jpeg", ".png" };
+            var validExtensions = new[] { ".jpeg", ".png", ".jpg" };
 
             foreach (var photo in photos)
             {

@@ -2,17 +2,17 @@
 {
     using System.Reflection;
 
-    using Data;
+    using BookShop.Data;
     using BookShop.Data.Common;
     using BookShop.Data.Common.Repositories;
-    using Data.Models;
-    using Data.Repositories;
-    using Data.Seeding;
-    using Services;
+    using BookShop.Data.Models;
+    using BookShop.Data.Repositories;
+    using BookShop.Data.Seeding;
+    using BookShop.Services;
     using BookShop.Services.Data;
-    using Services.Mapping;
-    using Services.Messaging;
-    using ViewModels;
+    using BookShop.Services.Mapping;
+    using BookShop.Services.Messaging;
+    using BookShop.Web.ViewModels;
     using CloudinaryDotNet;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -41,6 +41,11 @@
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+               options.SuppressModelStateInvalidFilter = true;
+            });
+
             services.Configure<CookiePolicyOptions>(
                 options =>
                     {
@@ -54,7 +59,6 @@
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
-
 
             var cloudName = this.configuration["Cloudinary:Name"];
             var apiKey = this.configuration["Cloudinary:Key"];

@@ -1,10 +1,19 @@
 ﻿namespace BookShop.Web.Controllers
 {
-    using ViewModels.Books;
+    using System.Threading.Tasks;
+    using BookShop.Web.ViewModels.Books;
     using Microsoft.AspNetCore.Mvc;
+    using BookShop.Services.Data;
 
     public class BooksController : BaseController
     {
+        private readonly IBookService bookService;
+
+        public BooksController(IBookService bookService)
+        {
+            this.bookService = bookService;
+        }
+
         [HttpGet]
         public IActionResult Create()
         {
@@ -12,9 +21,16 @@
         }
 
         [HttpPost]
-        public IActionResult Create(AddBookViewModel inputModel)
+        public async Task<IActionResult> Create(AddBookViewModel inputModel)
         {
-            return this.RedirectToAction("Index", "Create");
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(inputModel);
+            }
+
+            var bookId = await this.bookService.CreateBookAsync(inputModel);
+
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

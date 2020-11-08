@@ -2,7 +2,7 @@
 {
     using System.Diagnostics;
 
-    using ViewModels;
+    using BookShop.Web.ViewModels;
 
     using Microsoft.AspNetCore.Mvc;
 

@@ -44,7 +44,7 @@
 
         public async Task RemoveImageAsync(string publicId)
         {
-            var parameters = new DeletionParams("das");
+            var parameters = new DeletionParams(publicId);
             await this.cloudinary.DestroyAsync(parameters);
         }
     }
