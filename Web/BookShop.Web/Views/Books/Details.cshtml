@@ -1,0 +1,32 @@
+﻿@model BookShop.Web.ViewModels.Books.DetailsBookViewModel;
+@{
+    ViewData["Title"] = "Details";
+}
+
+<section class="d-flex">
+    <article>
+        <h2>@Model.Name</h2>
+        <span>Автори: </span>
+        @foreach(var author in Model.Authors)
+        {
+            <span><a href="/Authors/AllBooks/@author.AuthorId">@author.AuthorFullName</a></span>
+        }
+    <ul class="list-group">
+        <li class="list-group-item">Издател: @Model.PublisherName</li>
+        <li class="list-group-item">Брой страници: @Model.Pages</li>
+        <li class="list-group-item">Година на издаване: @Model.YearOfIssue</li>
+        <li class="list-group-item">Език: @Model.Language</li>
+        <li class="list-group-item">ISBN: @Model.Isbn</li>
+        <li class="list-group-item">
+            <span>Категории: </span>
+            @foreach(var category in Model.Categories)
+            {
+                <span><a href="/Categories/AllBooks/@category.Id">@category.Name</a></span>
+            }
+        </li>
+    </ul>
+    </article>
+    <article>
+        <img src="@Model.Photos.First()" />
+    </article>
+</section>

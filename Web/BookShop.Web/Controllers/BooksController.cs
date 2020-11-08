@@ -30,7 +30,20 @@
 
             var bookId = await this.bookService.CreateBookAsync(inputModel);
 
-            return this.RedirectToAction("Index", "Home");
+            return this.RedirectToAction("Details", new { Id = bookId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            if (!await this.bookService.DoesBookExist(id))
+            {
+                return this.NotFound();
+            }
+
+            var book = await this.bookService.GetById<DetailsBookViewModel>(id);
+
+            return this.View(book);
         }
     }
 }

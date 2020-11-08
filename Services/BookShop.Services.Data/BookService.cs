@@ -7,6 +7,7 @@
     using BookShop.Data.Common.Repositories;
     using BookShop.Data.Models;
     using BookShop.Web.ViewModels.Books;
+    using BookShop.Services.Mapping;
     using Microsoft.EntityFrameworkCore;
 
     public class BookService : IBookService
@@ -61,6 +62,13 @@
 
             return book.Id;
         }
+
+        public async Task<bool> DoesBookExist(int id)
+            => await this.booksRepository.AllAsNoTracking().AnyAsync(x => x.Id == id);
+
+        public async Task<T> GetById<T>(int id)
+            => await this.booksRepository.AllAsNoTracking()
+                .Where(x => x.Id == id).To<T>().FirstOrDefaultAsync();
 
         private async Task AddAuthorsAsync(AddBookViewModel model, Book book)
         {
