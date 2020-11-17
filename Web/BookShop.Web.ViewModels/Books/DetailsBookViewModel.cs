@@ -36,16 +36,15 @@
 
         public string[] Photos { get; set; }
 
-        public AuthorDto[] Authors { get; set; }
+        public AuthorBookDto[] AuthorBooks { get; set; }
 
-        public CategoryDto[] Categories { get; set; }
+        public BookCategoryDto[] BookCategories { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Book, DetailsBookViewModel>()
                 .ForMember(x => x.Language, y => y.MapFrom(x => x.Language.ToString()))
-                .ForMember(x => x.Photos, y => y.MapFrom(x => x.Photos.Select(z => z.Url)))
-                .ForMember(x => x.Categories, y => y.MapFrom(x => x.BookCategories.Select(z => z.Category.Name)));
+                .ForMember(x => x.Photos, y => y.MapFrom(x => x.Photos.Select(z => z.Url)));
         }
     }
 }

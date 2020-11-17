@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoMapper;
     using BookShop.Data.Common.Repositories;
     using BookShop.Data.Models;
     using BookShop.Web.ViewModels.Books;
@@ -17,6 +18,7 @@
         private readonly IRepository<Category> categoriesRepository;
         private readonly IRepository<Author> authorsRepository;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly IMapper mapper;
 
         public BookService(
             IDeletableEntityRepository<Book> booksRepository,
@@ -40,19 +42,9 @@
             var filesInfo = await this.cloudinaryService.UploadImageAsync(model.Photos);
             var photos = filesInfo.Select(x => new Photo { Url = x.Url, PublicId = x.PublicId }).ToList();
 
-            var book = new Book
-            {
-                Name = model.Name,
-                Price = model.Price,
-                Pages = model.Pages,
-                Publisher = publisher,
-                Photos = photos,
-                Annotation = model.Annotation,
-                Quantity = model.Quantity,
-                Isbn = model.Isbn,
-                Language = model.Language,
-                YearOfIssue = model.YearOfIssue,
-            };
+            var book = AutoMapperConfig.MapperInstance.Map<Book>(model);
+            book.Publisher = publisher;
+            book.Photos = photos;
 
             await this.AddCategoriesAsync(model, book);
             await this.AddAuthorsAsync(model, book);
@@ -69,6 +61,11 @@
         public async Task<T> GetById<T>(int id)
             => await this.booksRepository.AllAsNoTracking()
                 .Where(x => x.Id == id).To<T>().FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
+            => await this.booksRepository.AllAsNoTracking()
+                .To<T>()
+                .ToListAsync();
 
         private async Task AddAuthorsAsync(AddBookViewModel model, Book book)
         {

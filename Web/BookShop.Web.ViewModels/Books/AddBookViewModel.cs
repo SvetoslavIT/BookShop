@@ -6,11 +6,12 @@
     using BookShop.Data.Models;
     using BookShop.Web.Infrastructure.ValidationAttributes;
     using Microsoft.AspNetCore.Http;
+    using BookShop.Services.Mapping;
 
     using static BookShop.Common.ErrorMessages;
     using static BookShop.Common.GlobalConstants;
 
-    public class AddBookViewModel
+    public class AddBookViewModel : IMapTo<Book>
     {
         [Required(ErrorMessage = NotRequire)]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = InvalidBookName)]

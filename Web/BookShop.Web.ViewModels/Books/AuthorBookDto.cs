@@ -3,10 +3,10 @@
     using BookShop.Data.Models;
     using BookShop.Services.Mapping;
 
-    public class AuthorDto : IMapFrom<AuthorBook>
+    public class AuthorBookDto : IMapFrom<AuthorBook>
     {
         public int AuthorId { get; set; }
 
-        public Author AuthorFullName { get; set; }
+        public string AuthorFullName { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace BookShop.Services.Data
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using BookShop.Data.Models;
@@ -12,5 +13,7 @@
         Task<bool> DoesBookExist(int id);
 
         Task<T> GetById<T>(int id);
+
+        Task<IEnumerable<T>> GetAllAsync<T>();
     }
 }

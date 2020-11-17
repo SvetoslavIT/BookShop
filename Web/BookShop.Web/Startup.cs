@@ -43,7 +43,7 @@
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
-               options.SuppressModelStateInvalidFilter = true;
+                options.SuppressModelStateInvalidFilter = true;
             });
 
             services.Configure<CookiePolicyOptions>(

@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    using AutoMapper;
     using BookShop.Common;
     using BookShop.Data.Common.Models;
 
@@ -34,10 +34,12 @@
 
         public int PublisherId { get; set; }
 
+        [IgnoreMap]
         public virtual Publisher Publisher { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
 
+        [IgnoreMap]
         public virtual ICollection<Photo> Photos { get; set; } = new HashSet<Photo>();
 
         public virtual ICollection<Cart> Carts { get; set; } = new HashSet<Cart>();
