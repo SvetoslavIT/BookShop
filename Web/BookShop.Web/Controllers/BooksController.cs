@@ -43,9 +43,14 @@
             return this.View(book);
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int page = 0)
         {
-            var books = await this.bookService.GetAllAsync<AllBooksViewModel>();
+            if (page < 0)
+            {
+                return this.BadRequest();
+            }
+
+            var books = await this.bookService.GetByPage<AllBooksViewModel>(page);
 
             return this.View(books);
         }

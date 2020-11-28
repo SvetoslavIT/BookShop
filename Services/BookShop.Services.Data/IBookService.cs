@@ -15,5 +15,9 @@
         Task<T> GetById<T>(int id);
 
         Task<IEnumerable<T>> GetAllAsync<T>();
+
+        Task<IEnumerable<T>> GetByPage<T>(int count);
+
+        Task<int> GetCountAsync();
     }
 }

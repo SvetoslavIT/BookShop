@@ -9,6 +9,7 @@
     using BookShop.Data.Models;
     using BookShop.Web.ViewModels.Books;
     using BookShop.Services.Mapping;
+    using BookShop.Common;
     using Microsoft.EntityFrameworkCore;
 
     public class BookService : IBookService
@@ -18,7 +19,6 @@
         private readonly IRepository<Category> categoriesRepository;
         private readonly IRepository<Author> authorsRepository;
         private readonly ICloudinaryService cloudinaryService;
-        private readonly IMapper mapper;
 
         public BookService(
             IDeletableEntityRepository<Book> booksRepository,
@@ -60,12 +60,24 @@
 
         public async Task<T> GetById<T>(int id)
             => await this.booksRepository.AllAsNoTracking()
-                .Where(x => x.Id == id).To<T>().FirstOrDefaultAsync();
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<T>> GetAllAsync<T>()
             => await this.booksRepository.AllAsNoTracking()
                 .To<T>()
                 .ToListAsync();
+
+        public async Task<IEnumerable<T>> GetByPage<T>(int page)
+            => await this.booksRepository.AllAsNoTracking()
+                .To<T>()
+                .Skip(page * GlobalConstants.BooksPerPage)
+                .Take(GlobalConstants.BooksPerPage)
+                .ToListAsync();
+
+        public async Task<int> GetCountAsync()
+            => await this.booksRepository.AllAsNoTracking().CountAsync();
 
         private async Task AddAuthorsAsync(AddBookViewModel model, Book book)
         {

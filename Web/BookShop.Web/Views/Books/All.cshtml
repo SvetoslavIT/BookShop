@@ -1,15 +1,21 @@
-﻿@model IEnumerable<BookShop.Web.ViewModels.Books.AllBooksViewModel>
+﻿@using BookShop.Common
+@using BookShop.Services.Data
+@model IEnumerable<BookShop.Web.ViewModels.Books.AllBooksViewModel>
+@inject IBookService BookService
 @{
     ViewData["Title"] = "All";
 }
 
 <h2>Книги</h2>
 <div class="row">
-    @foreach (var book in @Model)
+    @foreach (var book in Model)
     {
         <div class="col-sm-4 col-md-3 col-xs-6">
-            <img src="@book.ImageUrl" width="200px" alt="book" />
-            <h5>@book.Name</h5>
+
+            <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">
+                <img src="@book.ImageUrl" width="200px" alt="book" />
+                <h5>@book.Name</h5>
+            </a>
             <p>
                 @for (var i = 0; i < book.Authors.Length; i++)
                 {
@@ -26,6 +32,15 @@
             </p>
             <p>@book.Price.ToString("f2") лв.</p>
         </div>
-
     }
 </div>
+<nav class="mt-4" aria-label="Page navigation sample">
+    <ul class="pagination">
+        @for (var i = 1; i <= Math.Ceiling(await BookService.GetCountAsync() / (double)GlobalConstants.BooksPerPage); i++)
+        {
+            <li style="cursor: pointer;" class="page-item  active">
+                <a class="page-link" asp-controller="Books" asp-action="All" asp-route-page="@(i - 1)">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
