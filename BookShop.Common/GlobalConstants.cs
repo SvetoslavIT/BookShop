@@ -45,5 +45,7 @@
         public const int UrlMaxLength = 1000;
 
         public const int BooksPerPage = 12;
+
+        public const string DefaultCategoryName = "all";
     }
 }

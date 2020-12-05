@@ -7,34 +7,34 @@
     <article>
         <h2>@Model.Name</h2>
         <span>Автори: </span>
-        @foreach(var author in Model.AuthorBooks)
+        @foreach (var author in Model.AuthorBooks)
         {
             <span><a href="/Authors/AllBooks/@author.AuthorId">@author.AuthorFullName</a></span>
         }
-    <ul class="list-group">
-        <li class="list-group-item">Издател: @Model.PublisherName</li>
-        <li class="list-group-item">Брой страници: @Model.Pages</li>
-        <li class="list-group-item">Година на издаване: @Model.YearOfIssue</li>
-        <li class="list-group-item">Език: @Model.Language</li>
-        <li class="list-group-item">ISBN: @Model.Isbn</li>
-        <li class="list-group-item">
-            <span>Категории: </span>
-            @for (var i = 0; i < Model.BookCategories.Length; i++)
-            {
-                var category = Model.BookCategories[i];
-                if (i == Model.BookCategories.Length - 1)
+        <ul class="list-group">
+            <li class="list-group-item">Издател: @Model.PublisherName</li>
+            <li class="list-group-item">Брой страници: @Model.Pages</li>
+            <li class="list-group-item">Година на издаване: @Model.YearOfIssue</li>
+            <li class="list-group-item">Език: @Model.Language</li>
+            <li class="list-group-item">ISBN: @Model.Isbn</li>
+            <li class="list-group-item">
+                <span>Категории: </span>
+                @for (var i = 0; i < Model.BookCategories.Length; i++)
                 {
-                    <span><a href="/Categories/AllBooks/@category.CategoryId">@category.CategoryName</a></span>
+                    var category = Model.BookCategories[i];
+                    if (i == Model.BookCategories.Length - 1)
+                    {
+                        <span><a asp-action="All" asp-route-categoryName="@category.CategoryName">@category.CategoryName</a></span>
+                    }
+                    else
+                    {
+                        <span><a asp-action="All" asp-route-categoryName="@category.CategoryName">@category.CategoryName</a>,</span>
+                    }
                 }
-                else
-                {
-                    <span><a href="/Categories/AllBooks/@category.CategoryId">@category.CategoryName</a>,</span>
-                }
-            }
-        </li>
-    </ul>
+            </li>
+        </ul>
     </article>
     <article>
-        <img src="@Model.Photos.First()" width="250px" alt="book"/>
+        <img src="@Model.Photos.First()" width="250px" alt="book" />
     </article>
 </section>

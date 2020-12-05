@@ -1,6 +1,8 @@
 ﻿namespace BookShop.Services.Data
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     using BookShop.Data.Models;
@@ -10,14 +12,18 @@
     {
         Task<int> CreateBookAsync(AddBookViewModel model);
 
-        Task<bool> DoesBookExist(int id);
+        Task<bool> DoesBookExistAsync(int id);
 
-        Task<T> GetById<T>(int id);
+        Task<T> GetByIdAsync<T>(int id);
 
         Task<IEnumerable<T>> GetAllAsync<T>();
 
-        Task<IEnumerable<T>> GetByPage<T>(int count);
+        Task<IEnumerable<T>> GetByPageWithoutFilterAsync<T>(int count);
 
-        Task<int> GetCountAsync();
+        Task<IEnumerable<T>> GetByPageWithFilterAsync<T>(int count, Expression<Func<Book, bool>> filter);
+
+        Task<int> GetCountWithoutFilterAsync();
+
+        Task<int> GetCountWithFilterAsync(Expression<Func<Book, bool>> filter);
     }
 }
