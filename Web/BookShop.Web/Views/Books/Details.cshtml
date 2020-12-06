@@ -1,4 +1,8 @@
-﻿@model BookShop.Web.ViewModels.Books.DetailsBookViewModel;
+﻿@using System.Security.Claims
+@using BookShop.Data.Models
+@using Microsoft.AspNetCore.Identity
+@model BookShop.Web.ViewModels.Books.DetailsBookViewModel;
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Details";
 }
@@ -38,3 +42,66 @@
         <img src="@Model.Photos.First()" width="250px" alt="book" />
     </article>
 </section>
+@if (this.User.Identity.IsAuthenticated)
+{
+    <div class="container pb-cmnt-container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-info">
+                    <div class="panel-body">
+                        <form id="form" method="post" class="form-inline">
+                            <textarea id="content" placeholder="Напиши коментара си тук" class="pb-cmnt-textarea"></textarea>
+                            <span class="text-danger"></span>
+                            <button id="createBtn" class="btn btn-primary pull-right" type="button">Изпрати</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const textarea = document.getElementById('content');
+                document.getElementById('createBtn').addEventListener("click",
+                    async (e) => {
+                        e.preventDefault();
+
+                        const uri = '@Url.Action("Create", "Comments")';
+                        const token = document.querySelector('#form input[name=__RequestVerificationToken]').value;
+                        const data = {
+                            'Description': textarea.value,
+                            'BookId': @Model.Id,
+                            'UserId': '@this.UserManager.GetUserId(this.User)'
+                        };
+
+                        fetch(uri,
+                            {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': token
+                                },
+                                body: JSON.stringify(data)
+                            });
+
+                        textarea.value = '';
+                    });
+            });
+        </script>
+    }
+}
+
+<div id="comments">
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="comment">
+            <div class="d-flex justify-content-lg-between">
+                <h4>@comment.UserFullName</h4>
+                <p>@comment.CreatedOn.ToShortDateString()</p>
+            </div>
+            <p>@comment.Description</p>
+        </div>
+    }
+</div>

@@ -41,5 +41,7 @@
         public const string InvalidConfirmPassword = "Паролите не съвпадат!";
 
         public const string InvalidEmail = "Невалиден Е-майл!";
+
+        public const string InvalidDescription = "Описанието трябва да е между 3 и 300 символа!";
     }
 }

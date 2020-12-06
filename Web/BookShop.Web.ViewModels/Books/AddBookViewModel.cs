@@ -14,7 +14,7 @@
     public class AddBookViewModel : IMapTo<Book>
     {
         [Required(ErrorMessage = NotRequire)]
-        [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = InvalidBookName)]
+        [StringLength(NameMaxLength, MinimumLength = DefaultMinLength, ErrorMessage = InvalidBookName)]
         public string Name { get; set; }
 
         [Range(typeof(decimal), MinPrice, MaxPrice, ErrorMessage = InvalidPrice)]
@@ -42,7 +42,7 @@
         public string Annotation { get; set; }
 
         [Required(ErrorMessage = NotRequire)]
-        [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = InvalidPublisherName)]
+        [StringLength(NameMaxLength, MinimumLength = DefaultMinLength, ErrorMessage = InvalidPublisherName)]
         public string Publisher { get; set; }
 
         [Required(ErrorMessage = NotRequire)]

@@ -57,6 +57,7 @@
                     {
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
+            services.AddAntiforgery(options => { options.HeaderName = "X-CSRF-TOKEN"; });
             services.AddRazorPages();
 
             var cloudName = this.configuration["Cloudinary:Name"];
@@ -78,6 +79,7 @@
             services.AddTransient<ICloudinaryService, CloudinaryService>();
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ICommentService, CommentService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

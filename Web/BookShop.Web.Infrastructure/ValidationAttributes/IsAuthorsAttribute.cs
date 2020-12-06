@@ -19,7 +19,7 @@
             }
 
             return authors
-                .Any(x => x.Length < NameMinLength || x.Length > NameMaxLength) ?
+                .Any(x => x.Length < DefaultMinLength || x.Length > NameMaxLength) ?
                 new ValidationResult(InvalidAuthorName) :
                 ValidationResult.Success;
         }

@@ -61,12 +61,12 @@
             public string ConfirmPassword { get; set; }
 
             [Required(ErrorMessage = NotRequire)]
-            [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = InvalidUserFullName)]
+            [StringLength(NameMaxLength, MinimumLength = DefaultMinLength, ErrorMessage = InvalidUserFullName)]
             [Display(Name = "Пълно име")]
             public string FullName { get; set; }
 
             [Required(ErrorMessage = NotRequire)]
-            [StringLength(AddressMaxLength, MinimumLength = AddressMinLength, ErrorMessage = InvalidAddress)]
+            [StringLength(AddressMaxLength, MinimumLength = DefaultMinLength, ErrorMessage = InvalidAddress)]
             [Display(Name = "Адрес")]
             public string Address { get; set; }
         }

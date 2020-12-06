@@ -6,11 +6,9 @@
 
         public const string AdministratorRoleName = "Administrator";
 
-        public const int NameMinLength = 3;
+        public const int DefaultMinLength = 3;
 
         public const int NameMaxLength = 100;
-
-        public const int AddressMinLength = 3;
 
         public const int AddressMaxLength = 1000;
 

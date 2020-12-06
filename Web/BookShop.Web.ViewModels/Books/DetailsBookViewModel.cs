@@ -44,6 +44,7 @@
         {
             configuration.CreateMap<Book, DetailsBookViewModel>()
                 .ForMember(x => x.Language, y => y.MapFrom(x => x.Language.ToString()))
+                .ForMember(x => x.Comments, y => y.MapFrom(x => x.Comments.OrderBy(z => z.CreatedOn)))
                 .ForMember(x => x.Photos, y => y.MapFrom(x => x.Photos.Select(z => z.Url)));
         }
     }
