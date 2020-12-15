@@ -1,12 +1,9 @@
 ﻿namespace BookShop.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    using AutoMapper;
     using BookShop.Data.Common.Repositories;
     using BookShop.Data.Models;
     using BookShop.Web.ViewModels.Books;
@@ -63,40 +60,44 @@
                 .AnyAsync(x => x.Id == id);
 
         public Task<T> GetByIdAsync<T>(int id)
-            => this.booksRepository.AllAsNoTracking()
+            => this.booksRepository
+                .AllAsNoTracking()
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<T>> GetAllAsync<T>()
-            => await this.booksRepository.AllAsNoTracking()
+            => await this.booksRepository
+                .AllAsNoTracking()
                 .To<T>()
                 .ToListAsync();
 
-        public async Task<IEnumerable<T>> GetByPageWithoutFilterAsync<T>(int page)
-            => await this.booksRepository.AllAsNoTracking()
-                .To<T>()
-                .Skip(page * GlobalConstants.BooksPerPage)
-                .Take(GlobalConstants.BooksPerPage)
-                .ToListAsync();
-
-        public async Task<IEnumerable<T>> GetByPageWithFilterAsync<T>(int page, Expression<Func<Book, bool>> filter)
-            => await this.booksRepository.AllAsNoTracking()
-                .Where(filter)
+        public async Task<IEnumerable<T>> GetByPageAsync<T>(int page)
+            => await this.booksRepository
+                .AllAsNoTracking()
                 .To<T>()
                 .Skip(page * GlobalConstants.BooksPerPage)
                 .Take(GlobalConstants.BooksPerPage)
                 .ToListAsync();
 
-        public Task<int> GetCountWithoutFilterAsync()
+        public async Task<IEnumerable<T>> GetByPageWithCategoryAsync<T>(int page, int categoryId)
+            => await this.booksRepository
+                .AllAsNoTracking()
+                .Where(x => x.BookCategories.Any(y => y.Category.Id == categoryId))
+                .To<T>()
+                .Skip(page * GlobalConstants.BooksPerPage)
+                .Take(GlobalConstants.BooksPerPage)
+                .ToListAsync();
+
+        public Task<int> GetCountAsync()
             => this.booksRepository
                 .AllAsNoTracking()
                 .CountAsync();
 
-        public Task<int> GetCountWithFilterAsync(Expression<Func<Book, bool>> filter)
+        public Task<int> GetCountByCategoryAsync(int categoryId)
             => this.booksRepository
                 .AllAsNoTracking()
-                .CountAsync(filter);
+                .CountAsync(x => x.BookCategories.Any(y => y.Category.Id == categoryId));
 
         private async Task AddAuthorsAsync(AddBookViewModel model, Book book)
         {

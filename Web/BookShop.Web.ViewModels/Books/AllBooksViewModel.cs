@@ -9,7 +9,5 @@
         public IEnumerable<BookDto> Books { get; set; }
 
         public int Pages { get; set; }
-
-        public string CurrentCategory { get; set; }
     }
 }

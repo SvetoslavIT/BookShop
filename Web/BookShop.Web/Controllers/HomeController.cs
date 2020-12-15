@@ -9,12 +9,10 @@
     public class HomeController : BaseController
     {
         [HttpGet]
-        public IActionResult Index()
-            => this.View();
+        public IActionResult Index() => this.View();
 
         [HttpGet]
-        public IActionResult Privacy()
-            => this.View();
+        public IActionResult Privacy() => this.View();
 
         [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -23,7 +21,6 @@
                 new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
 
         [HttpGet]
-        public IActionResult HttpError(int statusCode)
-            => this.View(statusCode);
+        public IActionResult HttpError(int statusCode) => this.View(statusCode);
     }
 }

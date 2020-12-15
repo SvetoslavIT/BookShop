@@ -1,0 +1,40 @@
+﻿@model BookShop.Web.ViewModels.Books.AllBooksViewModel
+<div class="row">
+    <div class="col-md-3">
+        <h3>Категории</h3>
+        @foreach (var category in Model.Categories)
+        {
+            <div>
+                <a asp-controller="Categories" asp-action="All" asp-route-id="@category.Id">@category.Name</a>
+            </div>
+        }
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            @foreach (var book in Model.Books)
+            {
+                <div class="col-sm-4 col-md-3">
+                    <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">
+                        <img src="@book.ImageUrl" width="200px" alt="book" />
+                        <h5>@book.Name</h5>
+                    </a>
+                    <p>
+                        @for (var i = 0; i < book.Authors.Length; i++)
+                        {
+                            var author = book.Authors[i];
+                            if (i == book.Authors.Length - 1)
+                            {
+                                <span>@author</span>
+                            }
+                            else
+                            {
+                                <span>@author, </span>
+                            }
+                        }
+                    </p>
+                    <p>@book.Price.ToString("f2") лв.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

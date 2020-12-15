@@ -1,31 +1,25 @@
 ﻿namespace BookShop.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     using BookShop.Web.ViewModels.Books;
     using Microsoft.AspNetCore.Mvc;
     using BookShop.Services.Data;
     using BookShop.Common;
-    using BookShop.Data.Models;
-    using Microsoft.EntityFrameworkCore.Internal;
 
     public class BooksController : BaseController
     {
-        private readonly IBookService bookService;
-        private readonly ICategoryService categoryService;
+        private readonly IBookService books;
+        private readonly ICategoryService categories;
 
-        public BooksController(IBookService bookService, ICategoryService categoryService)
+        public BooksController(IBookService books, ICategoryService categories)
         {
-            this.bookService = bookService;
-            this.categoryService = categoryService;
+            this.books = books;
+            this.categories = categories;
         }
 
-        public IActionResult Create()
-            => this.View();
+        public IActionResult Create() => this.View();
 
         [HttpPost]
         public async Task<IActionResult> Create(AddBookViewModel inputModel)
@@ -35,56 +29,41 @@
                 return this.View(inputModel);
             }
 
-            var bookId = await this.bookService.CreateBookAsync(inputModel);
+            var bookId = await this.books.CreateBookAsync(inputModel);
 
             return this.RedirectToAction("Details", new { id = bookId });
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            if (!await this.bookService.DoesBookExistAsync(id))
+            if (!await this.books.DoesBookExistAsync(id))
             {
                 return this.NotFound();
             }
 
-            var book = await this.bookService.GetByIdAsync<DetailsBookViewModel>(id);
+            var book = await this.books.GetByIdAsync<DetailsBookViewModel>(id);
 
             return this.View(book);
         }
 
-        public async Task<IActionResult> All(int page = 0, string categoryName = GlobalConstants.DefaultCategoryName)
+        public async Task<IActionResult> All(int page = 0)
         {
             if (page < 0)
             {
                 return this.BadRequest();
             }
 
-            int count;
-            IEnumerable<BookDto> books;
-
-            if (categoryName == GlobalConstants.DefaultCategoryName)
-            {
-                count = await this.bookService.GetCountWithoutFilterAsync();
-                books = await this.bookService.GetByPageWithoutFilterAsync<BookDto>(page);
-            }
-            else
-            {
-                Expression<Func<Book, bool>> filter =
-                    x => x.BookCategories.Any(y => y.Category.Name.ToLower() == categoryName.ToLower());
-
-                count = await this.bookService.GetCountWithFilterAsync(filter);
-                books = await this.bookService.GetByPageWithFilterAsync<BookDto>(page, filter);
-            }
+            var count = await this.books.GetCountAsync();
 
             var pages = (int)Math.Ceiling(count / (double)GlobalConstants.BooksPerPage);
-            var categories = await this.categoryService.GetAllAsync<CategoryDto>();
+            var allBooks = await this.books.GetByPageAsync<BookDto>(page);
+            var allCategories = await this.categories.GetAllAsync<CategoryDto>();
 
             var model = new AllBooksViewModel
             {
                 Pages = pages,
-                Books = books,
-                Categories = categories,
-                CurrentCategory = categoryName,
+                Books = allBooks,
+                Categories = allCategories,
             };
 
             return this.View(model);
