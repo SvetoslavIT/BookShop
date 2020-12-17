@@ -28,9 +28,7 @@
         private readonly IConfiguration configuration;
 
         public Startup(IConfiguration configuration)
-        {
-            this.configuration = configuration;
-        }
+            => this.configuration = configuration;
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -81,6 +79,7 @@
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IAuthorService, AuthorService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

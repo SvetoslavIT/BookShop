@@ -31,7 +31,7 @@
 
             var bookId = await this.books.CreateBookAsync(inputModel);
 
-            return this.RedirectToAction("Details", new { id = bookId });
+            return this.RedirectToAction(nameof(this.Details), new { id = bookId });
         }
 
         public async Task<IActionResult> Details(int id)

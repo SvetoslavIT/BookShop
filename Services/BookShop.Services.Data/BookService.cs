@@ -1,7 +1,9 @@
 ﻿namespace BookShop.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     using BookShop.Data.Common.Repositories;
@@ -80,10 +82,10 @@
                 .Take(GlobalConstants.BooksPerPage)
                 .ToListAsync();
 
-        public async Task<IEnumerable<T>> GetByPageWithCategoryAsync<T>(int page, int categoryId)
+        public async Task<IEnumerable<T>> GetByPageWithFilterAsync<T>(int page, Expression<Func<Book, bool>> filter)
             => await this.booksRepository
                 .AllAsNoTracking()
-                .Where(x => x.BookCategories.Any(y => y.Category.Id == categoryId))
+                .Where(filter)
                 .To<T>()
                 .Skip(page * GlobalConstants.BooksPerPage)
                 .Take(GlobalConstants.BooksPerPage)
@@ -94,10 +96,10 @@
                 .AllAsNoTracking()
                 .CountAsync();
 
-        public Task<int> GetCountByCategoryAsync(int categoryId)
+        public Task<int> GetCountByFilterAsync(Expression<Func<Book, bool>> filter)
             => this.booksRepository
                 .AllAsNoTracking()
-                .CountAsync(x => x.BookCategories.Any(y => y.Category.Id == categoryId));
+                .CountAsync(filter);
 
         private async Task AddAuthorsAsync(AddBookViewModel model, Book book)
         {

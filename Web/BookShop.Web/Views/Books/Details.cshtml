@@ -1,6 +1,6 @@
 ﻿@using BookShop.Data.Models
 @using Microsoft.AspNetCore.Identity
-@model BookShop.Web.ViewModels.Books.DetailsBookViewModel;
+@model BookShop.Web.ViewModels.Books.DetailsBookViewModel
 @inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Details";
@@ -12,7 +12,9 @@
         <span>Автори: </span>
         @foreach (var author in Model.AuthorBooks)
         {
-            <span><a href="/Authors/AllBooks/@author.AuthorId">@author.AuthorFullName</a></span>
+            <span>
+                <a asp-controller="Authors" asp-action="AllBooks" asp-route-id="@author.AuthorId">@author.AuthorFullName</a>
+            </span>
         }
         <ul class="list-group">
             <li class="list-group-item">Издател: @Model.PublisherName</li>
@@ -27,11 +29,15 @@
                     var category = Model.BookCategories[i];
                     if (i == Model.BookCategories.Length - 1)
                     {
-                        <span><a href="/Categories/All/@category.CategoryId">@category.CategoryName</a></span>
+                        <span>
+                            <a asp-controller="Categories" asp-action="AllBooks" asp-route-id="@category.CategoryId">@category.CategoryName</a>
+                        </span>
                     }
                     else
                     {
-                        <span><a href="/Categories/All/@category.CategoryId">@category.CategoryName</a>,</span>
+                        <span>
+                            <a asp-controller="Categories" asp-action="AllBooks" asp-route-id="@category.CategoryId">@category.CategoryName</a>, 
+                        </span>
                     }
                 }
             </li>

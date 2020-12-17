@@ -1,8 +1,11 @@
 ﻿namespace BookShop.Services.Data
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
+    using BookShop.Data.Models;
     using BookShop.Web.ViewModels.Books;
 
     public interface IBookService
@@ -17,10 +20,10 @@
 
         Task<IEnumerable<T>> GetByPageAsync<T>(int count);
 
-        Task<IEnumerable<T>> GetByPageWithCategoryAsync<T>(int count, int categoryId);
+        Task<IEnumerable<T>> GetByPageWithFilterAsync<T>(int count, Expression<Func<Book, bool>> filter);
 
         Task<int> GetCountAsync();
 
-        Task<int> GetCountByCategoryAsync(int categoryId);
+        Task<int> GetCountByFilterAsync(Expression<Func<Book, bool>> filter);
     }
 }

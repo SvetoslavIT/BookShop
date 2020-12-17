@@ -7,38 +7,42 @@
 
     using BookShop.Common;
     using Microsoft.AspNetCore.Mvc;
-    using BookShop.Services.Data;
     using BookShop.Web.ViewModels.Books;
-    using BookShop.Web.ViewModels.Categories;
-    using BookShop.Data.Models;
+    using BookShop.Services.Data;
+    using Data.Models;
+    using ViewModels.Authors;
 
-    public class CategoriesController : BaseController
+    public class AuthorsController : BaseController
     {
         private readonly IBookService books;
         private readonly ICategoryService categories;
+        private readonly IAuthorService authors;
 
-        public CategoriesController(IBookService books, ICategoryService categories)
+        public AuthorsController(
+            IBookService books,
+            ICategoryService categories,
+            IAuthorService authors)
         {
             this.books = books;
             this.categories = categories;
+            this.authors = authors;
         }
 
         public async Task<IActionResult> AllBooks(int id, int page = 0)
         {
-            if (page < 0 ||
-                !await this.categories.DoesCategoryExistAsync(id))
+            if (page < 0)
             {
                 return this.BadRequest();
             }
 
-            Expression<Func<Book, bool>> filter = x => x.BookCategories.Any(y => y.CategoryId == id);
+            Expression<Func<Book, bool>> filter = x => x.AuthorBooks.Any(y => y.AuthorId == id);
 
             var count = await this.books.GetCountByFilterAsync(filter);
 
             var pages = (int)Math.Ceiling(count / (double)GlobalConstants.BooksPerPage);
             var allBooks = await this.books.GetByPageWithFilterAsync<BookDto>(page, filter);
             var allCategories = await this.categories.GetAllAsync<CategoryDto>();
-            var categoryName = await this.categories.GetNameByIdAsync(id);
+            var name = await this.authors.GetNameByIdAsync(id);
 
             var booksModel = new AllBooksViewModel
             {
@@ -47,10 +51,10 @@
                 Categories = allCategories,
             };
 
-            var model = new AllBooksByCategoryViewModel
+            var model = new AllBooksByAuthorViewModel
             {
-                CategoryId = id,
-                CategoryName = categoryName,
+                AuthorId = id,
+                AuthorName = name,
                 BooksModel = booksModel,
             };
 
